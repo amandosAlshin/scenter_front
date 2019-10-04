@@ -1,0 +1,5 @@
+  "install-windows-service": "winser -i",
+   
+ "uninstall-windows-service": "winser -r"
+
+ npm run-script install-windows-service

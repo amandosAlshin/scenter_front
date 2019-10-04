@@ -1,0 +1,6 @@
+{
+  "name": "Infobranch",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Infobranch.js"
+}

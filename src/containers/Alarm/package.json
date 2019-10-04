@@ -1,0 +1,6 @@
+{
+  "name": "Alarm",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Alarm.js"
+}
