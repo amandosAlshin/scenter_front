@@ -12,32 +12,18 @@ const filter = (state) => state.filter.filter;
 const filter_filial = (state) => state.filter.filial;
 const filter_branch = (state) => state.filter.branch;
 function waitoverCheck(time,queues,queueid){
-  let queue = _.filter(queues, function(o) {
-      return parseInt(o.F_ID,10) === parseInt(queueid,10);
-  });
-  if(queue.length>0){
-    if(time>queue[0].F_QWAIT_TIME){
+    if(time>10){
       return true;
     }else{
       return false
     }
-  }else{
-    return false;
-  }
 }
 function preWaitOverCheck(time,queues,queueid){
-  let queue = _.filter(queues, function(o) {
-      return parseInt(o.F_ID,10) === parseInt(queueid,10);
-  });
-  if(queue.length>0){
-    if(time>queue[0].F_QWAIT_TIME-5){
+    if(time>5){
       return true;
     }else{
       return false
     }
-  }else{
-    return false;
-  }
 }
 export const waitsTicket = createSelector(
   [ ticketsStatus, tickets,queuesStatus,queues,filter,filter_filial,filter_branch ],
