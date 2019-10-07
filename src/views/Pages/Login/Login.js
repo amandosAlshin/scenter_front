@@ -98,10 +98,10 @@ class Login extends Component {
                       </form>
                     </CardBody>
                   </Card>
-                  <Card  className="text-white py-5 d-md-down-none" style={{ width: 44 + '%', backgroundColor: "#B50938"}}>
+                  <Card  className="text-white py-5 d-md-down-none" style={{ width: 44 + '%', backgroundColor: "#ab235a"}}>
                     <CardBody className="text-center">
                       <div>
-                        <img style={{width: "185px"}} src={'/assets/img/logo.svg'} alt="logo"/>
+                        <img style={{width: "185px"}} src={'/assets/img/logo_newyear.png'} alt="logo"/>
                         <p style={{marginTop: '15px'}}>Ситуационный центр (СЦ) – это аналитическое решение, осуществляющее сбор, поиск и анализ информации, формирование моделей и прогнозирование развития событий, позволяющее группе людей (оперативный штаб) принимать решения и управлять ситуацией.</p>
                       </div>
                     </CardBody>

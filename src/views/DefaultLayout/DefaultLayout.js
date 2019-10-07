@@ -22,6 +22,7 @@ import DefaultAside from './DefaultAside';
 import DefaultFooter from './DefaultFooter';
 import DefaultHeader from './DefaultHeader';
 import Notification  from 'react-web-notification';
+import {setTheme} from "bizcharts";
 import {SERVER_SOCKET} from '../../constants/';
 var _ = require('lodash');
 var moment = require('moment');
@@ -69,7 +70,7 @@ class DefaultLayout extends Component {
        console.log("Ошибка " + error.message);
      };
    }
-   notificationAssessment(value,title){
+  notificationAssessment(value,title){
      if(this.state.ignore) {
        return;
      }
@@ -101,39 +102,38 @@ class DefaultLayout extends Component {
      );
 
    }
-
-   handlePermissionGranted(){
+  handlePermissionGranted(){
      console.log('Permission Granted');
      this.setState({
        ignore: false
      });
    }
-   handlePermissionDenied(){
+  handlePermissionDenied(){
      console.log('Permission Denied');
      this.setState({
        ignore: true
      });
    }
-   handleNotSupported(){
+  handleNotSupported(){
      console.log('Web Notification not Supported');
      this.setState({
        ignore: true
      });
    }
 
-   handleNotificationOnClick(e, tag){
+  handleNotificationOnClick(e, tag){
      console.log(e, 'Notification clicked tag:' + tag);
    }
 
-   handleNotificationOnError(e, tag){
+  handleNotificationOnError(e, tag){
      console.log(e, 'Notification error tag:' + tag);
    }
 
-   handleNotificationOnClose(e, tag){
+  handleNotificationOnClose(e, tag){
      console.log(e, 'Notification closed tag:' + tag);
    }
 
-   handleNotificationOnShow(e, tag){
+  handleNotificationOnShow(e, tag){
      console.log(e, 'Notification shown tag:' + tag);
    }
   componentWillMount(){
@@ -148,6 +148,71 @@ class DefaultLayout extends Component {
       this.props.windowState();
       this.props.roleList();
       this.connect();
+      const DEFAULT_COLOR = '#ab235a';
+      setTheme({
+        defaultColor: DEFAULT_COLOR,
+        colors: [ '#E4394B', '#A3D8E7', '#C70E59', '#00B4C4', '#98134B', '#007C97', '#53163E', '#05506F' ],
+        colors_16: [ '#E4394B', '#A3D8E7', '#C70E59', '#00B4C4', '#98134B', '#007C97', '#53163E', '#98134B',
+        '#53163E', '#E4394B', '#A3D8E7', '#C70E59', '#00B4C4', '#05506F', '#3C1621', '#EDEDED' ],
+        colors_pie: [ '#E4394B', '#A3D8E7', '#C70E59', '#00B4C4', '#98134B', '#007C97', '#53163E', '#98134B' ],
+        colors_pie_16:  [ '#E4394B', '#A3D8E7', '#C70E59', '#00B4C4', '#98134B', '#007C97', '#53163E', '#98134B',
+        '#53163E', '#E4394B', '#A3D8E7', '#C70E59', '#00B4C4', '#05506F', '#3C1621', '#EDEDED' ],
+        shape: {
+            point: {
+              lineWidth: 1,
+              fill: DEFAULT_COLOR,
+              radius: 4
+            },
+            hollowPoint: {
+              fill: '#fff',
+              lineWidth: 1,
+              stroke: DEFAULT_COLOR,
+              radius: 3
+            },
+            interval: {
+              lineWidth: 0,
+              fill: DEFAULT_COLOR,
+              fillOpacity: 0.85
+            },
+            pie: {
+              lineWidth: 1,
+              stroke: '#fff'
+            },
+            hollowInterval: {
+              fill: '#fff',
+              stroke: DEFAULT_COLOR,
+              fillOpacity: 0,
+              lineWidth: 1
+            },
+            area: {
+              lineWidth: 0,
+              fill: DEFAULT_COLOR,
+              fillOpacity: 0.3
+            },
+            polygon: {
+              lineWidth: 0,
+              fill: DEFAULT_COLOR,
+              fillOpacity: 1
+            },
+            hollowPolygon: {
+              fill: '#fff',
+              stroke: DEFAULT_COLOR,
+              fillOpacity: 0,
+              lineWidth: 1
+            },
+            hollowArea: {
+              fill: '#fff',
+              stroke: DEFAULT_COLOR,
+              fillOpacity: 0,
+              lineWidth: 1
+            },
+            line: {
+              stroke: DEFAULT_COLOR,
+              lineWidth: 2,
+              fill: null
+            }
+          },
+      });
     };
   }
   render() {
