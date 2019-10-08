@@ -1,7 +1,39 @@
 import React, { Component } from 'react';
-import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import { Card, CardBody, CardHeader, Col,FormFeedback, Row,Input,Button, Table } from 'reactstrap';
+import {  Field,reduxForm  } from 'redux-form'
 import CheckboxTree from 'react-checkbox-tree';
 var _ = require('lodash');
+const validate = values => {
+const errors = {}
+  if (!values.login) {
+    errors.login = 'Логин не заполнен'
+  }
+  if (!values.password) {
+    errors.password = 'Пароль не заполнен'
+  }
+  return errors
+}
+const warn = values => {
+  const warnings = {}
+  if (!values.login) {
+    warnings.login = 'Логин не заполнен'
+  }
+  if (!values.password) {
+    warnings.password = 'Пароль не заполнен'
+  }
+  return warnings
+}
+const renderField = ({ input,label, type,icon, meta: { touched, error } }) => {
+  return(
+      <div>
+          <Input
+          invalid={touched && error!==undefined} {...input}
+          name="login"
+          type={type} />
+          {touched && error && <FormFeedback>{error}</FormFeedback>}
+      </div>
+  )
+}
 class User extends Component {
   constructor(props){
     super(props)
@@ -10,6 +42,7 @@ class User extends Component {
       expanded: []
     }
     this.branchlist = this.branchlist.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   groupBy(dataToGroupOn, fieldNameToGroupOn, fieldNameForGroupName, fieldNameForChildren){
       var result = _.chain(dataToGroupOn)
@@ -107,7 +140,12 @@ class User extends Component {
   componentWillMount(){
     this.props.usersInfo(this.props.match.params.id);
   }
+  handleSubmit(values){
+       values.user_id = this.props.match.params.id;
+       this.props.usersEdit(values,this.props.history);
+  }
   render(){
+    const { handleSubmit} = this.props;
     return (
       <div className="animated fadeIn">
         <Row>
@@ -117,19 +155,65 @@ class User extends Component {
                 <strong><i className="icon-info pr-1"></i>Пользователь:</strong>
               </CardHeader>
               <CardBody>
+                <form onSubmit={handleSubmit(this.handleSubmit)}>
                   <Table responsive striped hover>
                       {
                         this.props.user_success.status ?
                           <tbody>
                             <tr>
                               <td>Логин</td>
-                              <td><strong>{this.props.user_success.data[0].login}</strong></td>
+                              <td>
+                              <strong>{this.props.user_success.data[0].login}</strong>
+                              </td>
+                              <td>
+                              <Field
+                                name="login"
+                                type="text"
+                                component={renderField}
+                              />
+                              </td>
                             </tr>
                             <tr>
                               <td>Пароль</td>
-                              <td><strong>{this.props.user_success.data[0].password}</strong></td>
+                              <td>
+                              <strong>{this.props.user_success.data[0].password}</strong>
+                              </td>
+                              <td>
+                              <Field
+                                name="password"
+                                type="text"
+                                component={renderField}
+                              />
+                              </td>
                             </tr>
                             <tr>
+                              <td>Email</td>
+                              <td>
+                              {this.props.user_success.data[0].email}
+                              </td>
+                              <td>
+                              <Field
+                                name="email"
+                                type="email"
+                                component={renderField}
+                              />
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Отправлять уведомление</td>
+                              <td>
+                              {this.props.user_success.data[0].send_n ? "true" : "false"}
+                              </td>
+                              <td style={{textAlign: "center"}}>
+                              <Field
+                                name="send_n"
+                                type="checkbox"
+                                component={renderField}
+                              />
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Роль</td>
                               <td>Роль</td>
                               <td><strong>{this.props.user_success.data[0].role === 0 ? 'Администратор'
                                   : this.props.user_success.data[0].role === 1 ? 'Директор'
@@ -138,6 +222,7 @@ class User extends Component {
                                   : false}</strong></td>
                             </tr>
                             <tr>
+                              <td>Дата регистраций</td>
                               <td>Дата регистраций</td>
                               <td><strong>{this.props.user_success.data[0].ins_date}</strong></td>
                             </tr>
@@ -148,6 +233,10 @@ class User extends Component {
                   </Table>
                   <h4>Отделений</h4>
                   {this.props.user_success.status ? this.props.user_success.data[0].role === 0 ? 'Все отделений' : this.branchlist() : false}
+                  <br />
+                  <Button type="submit" color="success" block>Сохранить</Button>
+                  <Button href="/user/user-list" color="primary" block>Назад</Button>
+                </form>
               </CardBody>
             </Card>
           </Col>
@@ -157,4 +246,8 @@ class User extends Component {
   }
 }
 
-export default User;
+export default reduxForm({
+  form: 'user_edit',
+  validate,
+  warn
+})(User);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import { Badge, Card, CardBody, CardHeader, Col, Row,Button, Table } from 'reactstrap';
 import Loader from '../Loader';
 class Users extends Component {
   constructor(props){
@@ -22,6 +22,12 @@ class Users extends Component {
     return (
       <div className="animated fadeIn">
         <Loader loader={this.props.loading_users_list || this.props.loading_user_delete} />
+        <Row>
+            <Col xl={12}>
+                <Button color="primary" href="/user/user-add">Добавить</Button>
+            </Col>
+        </Row>
+        <br />
         <Row>
           <Col xl={12}>
             <Card>
@@ -46,7 +52,7 @@ class Users extends Component {
                           <td>{user.password}</td>
                           <td>{user.role === 0 ? 'Администратор' : user.role === 1 ? 'Директор' : user.role === 2 ? 'Директор филиала' : user.role === 3 ? 'Нач. отделение' : false}</td>
                           <td>{user.ins_date}</td>
-                          <td><Badge onClick={()=>this.props.history.push(`/user/user-list/${user.id}`)} color='danger'>Посмотреть</Badge>&nbsp;&nbsp;<Badge onClick={()=>this.deleteUser(user.id)} color='primary'>Удалить</Badge></td>
+                          <td><Badge onClick={()=>this.props.history.push(`/user/user-list/${user.id}`)} color='danger'>Изменить</Badge>&nbsp;&nbsp;<Badge onClick={()=>this.deleteUser(user.id)} color='primary'>Удалить</Badge></td>
                       </tr>
                     )}
                   </tbody>

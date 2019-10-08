@@ -1,29 +1,29 @@
 import {DEFAULT,SERVER_DISPATCH,DISPATCH_SUCCESS,DISPATCH_ERROR,SERVER} from '../constants/';
 import axios from 'axios';
 export const stateDefault = ()=> ({
-  type: DEFAULT+'USER_ADD',
+  type: DEFAULT+'USER_EDIT',
 })
 export const serverDispatch = ()=> ({
-  type: SERVER_DISPATCH+'USER_ADD',
+  type: SERVER_DISPATCH+'USER_EDIT',
 
 })
 export const dispatchSuccess = (msg)=> ({
-  type: DISPATCH_SUCCESS+'USER_ADD',
+  type: DISPATCH_SUCCESS+'USER_EDIT',
   msg: msg
 
 })
 export const dispatchError = (msg)=> ({
-  type: DISPATCH_ERROR+'USER_ADD',
+  type: DISPATCH_ERROR+'USER_EDIT',
   msg: msg
 })
-export const userAdd = (values,history)=>{
+export const userEdit = (values,history)=>{
   return (dispatch,getState)=>{
     dispatch(serverDispatch())
       var querystring = require('querystring');
       const AuthStr = 'Bearer '.concat(sessionStorage.nomad_auth);
       axios({
         method: 'post',
-        url: SERVER+'api/user/useradd',
+        url: SERVER+'api/user/useredit',
         headers: {
           'crossDomain': true,
           'Authorization': AuthStr,
@@ -32,10 +32,9 @@ export const userAdd = (values,history)=>{
         data: querystring.stringify({
           login: values.login,
           password: values.password,
-          role: values.role,
           email: values.email,
-          state_n: values.state_n,
-          id_branch: values.branches
+          user_id: values.user_id,
+          send_n: values.send_n
         })
       })
       .then(function (response) {

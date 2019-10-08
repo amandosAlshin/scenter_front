@@ -7,6 +7,7 @@ import employee_list from './employee_list'
 import user_add from './user_add'
 import user_list from './user_list'
 import user_info from './user_info'
+import user_edit from './user_edit'
 import login from './login'
 import user_check from './user_check'
 import user_delete from './user_delete'
@@ -15,6 +16,7 @@ import employee_group_add from './employee_group_add'
 import employee_group_list from './employee_group_list'
 import window_state from './window_state'
 import role_list from './role-list'
+
 import { reducer as formReducer } from 'redux-form'
 const reducers = combineReducers({
   router: routerReducer,
@@ -26,6 +28,7 @@ const reducers = combineReducers({
   user_add: user_add,
   user_list: user_list,
   user_info: user_info,
+  user_edit: user_edit,
   login: login,
   user_check: user_check,
   user_delete: user_delete,

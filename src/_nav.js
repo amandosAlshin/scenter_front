@@ -60,11 +60,6 @@ export default {
       icon: 'icon-user',
     },
     {
-      name: 'Добавить',
-      url: '/user/user-add',
-      icon: 'icon-user-follow',
-    },
-    {
       title: true,
       name: 'NOMAD',
       wrapper: {            // optional wrapper object

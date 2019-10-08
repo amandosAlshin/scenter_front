@@ -35,24 +35,36 @@ const warn = values => {
 }
 const renderField = ({ input, label, type,icon, meta: { touched, error } }) => {
   if(label.icon){
-    console.log(touched,error);
     return(
-      <FormGroup>
-        <Label htmlFor="prependedInput">{label.name}</Label>
-        <div className="controls">
-          <InputGroup className="mb-4">
-            <InputGroupAddon addonType="prepend">
-              <InputGroupText>
-                <i className={label.icon}></i>
-              </InputGroupText>
-            </InputGroupAddon>
-            <Input invalid={touched && error!==undefined} {...input} type={type} autoComplete={label.name} />
-            {touched && error && <FormFeedback>{error}</FormFeedback>}
-          </InputGroup>
-        </div>
-      </FormGroup>
-    )
-  }
+          <FormGroup>
+            <Label htmlFor="prependedInput">{label.name}</Label>
+            <div className="controls">
+              <InputGroup className="mb-4">
+                <InputGroupAddon addonType="prepend">
+                  <InputGroupText>
+                    <i className={label.icon}></i>
+                  </InputGroupText>
+                </InputGroupAddon>
+                <Input invalid={touched && error!==undefined} {...input} type={type} autoComplete={label.name} />
+                {touched && error && <FormFeedback>{error}</FormFeedback>}
+              </InputGroup>
+            </div>
+          </FormGroup>
+        )
+    }else{
+        return(
+            <FormGroup>
+              <Label htmlFor="prependedInput">{label.name}</Label>
+              <div className="controls">
+                <InputGroup className="mb-4">
+                  <Input invalid={touched && error!==undefined} {...input} type={type} autoComplete={label.name} />
+                  {touched && error && <FormFeedback>{error}</FormFeedback>}
+                </InputGroup>
+              </div>
+            </FormGroup>
+        )
+
+    }
 }
 class UserAdd extends Component {
   constructor(props){
@@ -72,7 +84,7 @@ class UserAdd extends Component {
     }else{
       values.branches = this.state.branches;
       values.role = this.state.access;
-      this.props.useradd(values,this.props.history)
+      this.props.useradd(values,this.props.history);
     }
   }
   changeBranch(branch,access){
@@ -119,9 +131,22 @@ class UserAdd extends Component {
                 component={renderField}
                 label={{icon: "icon-lock",name: "Пароль"}}
               />
+              <Field
+                name="email"
+                type="email"
+                component={renderField}
+                label={{icon: "icon-envelope",name: "Email"}}
+              />
+              <Field
+                name="state_n"
+                type="checkbox"
+                component={renderField}
+                label={{icon: false,name: "Отправлять уведомление"}}
+              />
               <ChangeBranch branches={this.props.branch_list_tree} changeBranch={this.changeBranch}/>
               <br />
               <Button type="submit" color="success" block>Создать пользователя</Button>
+              <Button href="/user/user-list" color="primary" block>Назад</Button>
             </form>
           </CardBody>
         </Card>
@@ -129,7 +154,6 @@ class UserAdd extends Component {
     )
   }
 }
-
 export default reduxForm({
   form: 'user_add',
   validate,
