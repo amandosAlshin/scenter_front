@@ -20,7 +20,16 @@ class DefaultAside extends Component {
     this.changeBranch = this.changeBranch.bind(this)
     this.filterSubmit = this.filterSubmit.bind(this)
     this.filterReset = this.filterReset.bind(this)
+    this.ItemSlaid = this.ItemSlaid.bind(this)
   }
+  ItemSlaid(id){
+     let slaids = this.props.state_slaid.state_slaid;
+     slaids[id] = !slaids[id];
+     this.props.changeSlaids(slaids);
+   }
+   changeColumn(count){
+     this.props.changeCount(count);
+   }
   filterReset(){
     this.props.branchFilter(false,false);
     if(this.props.branches.length===1){
@@ -112,6 +121,7 @@ class DefaultAside extends Component {
     }
   }
   render() {
+    const {state_slaid} = this.props.state_slaid;
     return (
       <React.Fragment>
         <Card style={{border: 'none'}}>
@@ -179,7 +189,49 @@ class DefaultAside extends Component {
               :
                 false
             }
-
+            <br />
+           <h6>Статистика</h6>
+           <FormGroup row>
+             <Col md="9">
+               <form >
+                 <FormGroup check className="radio">
+                   <Input checked={state_slaid[0]} onChange={()=>this.ItemSlaid(0)} className="form-check-input" type="checkbox" id="radio1" name="radios" value="option1" />
+                   <Label check className="form-check-label" htmlFor="radio1">График 1</Label>
+                 </FormGroup>
+                 <FormGroup check className="radio">
+                   <Input checked={state_slaid[1]} onChange={()=>this.ItemSlaid(1)} className="form-check-input" type="checkbox" id="radio2" name="radios" value="option2" />
+                   <Label check className="form-check-label" htmlFor="radio2">График 2</Label>
+                 </FormGroup>
+                 <FormGroup check className="radio">
+                   <Input checked={state_slaid[2]} onChange={()=>this.ItemSlaid(2)} className="form-check-input" type="checkbox" id="radio3" name="radios" value="option3" />
+                   <Label check className="form-check-label" htmlFor="radio3">График 3</Label>
+                 </FormGroup>
+                 <FormGroup check className="radio">
+                   <Input checked={state_slaid[3]} onChange={()=>this.ItemSlaid(3)} className="form-check-input" type="checkbox" id="radio3" name="radios" value="option4" />
+                   <Label check className="form-check-label" htmlFor="radio3">График 4</Label>
+                 </FormGroup>
+                 <FormGroup check className="radio">
+                   <Input checked={state_slaid[4]} onChange={()=>this.ItemSlaid(4)} className="form-check-input" type="checkbox" id="radio3" name="radios" value="option5" />
+                   <Label check className="form-check-label" htmlFor="radio3">График 5</Label>
+                 </FormGroup>
+               </form>
+             </Col>
+           </FormGroup>
+           <h6>Колонки</h6>
+           <FormGroup row>
+             <Col md="9">
+               <form >
+                 <FormGroup check className="radio">
+                   <Input checked={this.props.column_count === 1 ? true : false} onChange={()=>this.changeColumn(1)} className="form-check-input" type="radio" id="radio1" name="radios" value="option1" />
+                   <Label check className="form-check-label" htmlFor="radio1">1</Label>
+                 </FormGroup>
+                 <FormGroup check className="radio">
+                   <Input checked={this.props.column_count === 2 ? true : false} onChange={()=>this.changeColumn(2)} className="form-check-input" type="radio" id="radio2" name="radios" value="option2" />
+                   <Label check className="form-check-label" htmlFor="radio2">2</Label>
+                 </FormGroup>
+               </form>
+             </Col>
+           </FormGroup>
           </CardBody>
         </Card>
       </React.Fragment>

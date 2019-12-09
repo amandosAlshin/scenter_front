@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import {  Card, CardBody, CardHeader } from 'reactstrap';
+import {  Card, CardBody, CardHeader, Button,Row,Col } from 'reactstrap';
 import Table from 'antd/lib/table';
 import 'antd/lib/table/style/css';
-import {  groupBy } from './groupBy';
 var _ = require('lodash');
 class Servers extends Component {
   constructor(props){
@@ -10,58 +9,58 @@ class Servers extends Component {
     this.state = {
       data: []
     }
+    this.filter = this.filter.bind(this)
+    this.reset = this.reset.bind(this)
   }
   componentWillMount(){
     this.props.branchList();
   }
   componentWillReceiveProps(props){
-    if(props.branch_success.data.length>0){
-      var servers = _.filter(props.branch_success.data, function(o) {return o.F_IP_ADDRESS.indexOf('.')>0});
-      var sr = groupBy(servers, 'F_IP_ADDRESS', 'F_IP_ADDRESS', 'servers');
-      sr.map(function(item){
-        let status = _.filter(item.servers, function(o){return parseInt(o.ONN,10)>0});
-        if(status.length>0){
-          item.status = 1;
-        }else{
-          item.status = 0;
-        }
-        return true;
-      })
-      this.setState({data: sr});
+    this.setState({data: this.props.branch_tree});
+
+  }
+  filter(){
+    var data = this.state.data;
+    let filterChild=(data)=>{
+      let on = _.filter(data, function(o) {return parseInt(o.ONN,10) ===0});
+      return on;
     }
+    for(var o=0;o<=data.length-1;o++){
+      data[o].children = filterChild(data[o].children)
+    }
+    this.setState({data: data})
+  }
+  reset(){
+    window.location.reload();
   }
   render() {
     const columnss = [
       {
         title: 'Сервер',
-        dataIndex: 'F_IP_ADDRESS',
-        key: 'F_IP_ADDRESS',
-        render: (text,row)=>{
-          return(
-            <span>{text} / ({_.map(row.servers, 'label').join(', ')})</span>
-          )
-        }
+        dataIndex: 'F_NAME',
+        key: 'F_NAME'
       },
       {
         title: 'Статус',
-        dataIndex: 'status',
-        key: 'status',
-        render: (text) =>{
-          if(parseInt(text,10)>0){
-              return (
-                <span>
-                  <span style={{
-                    color: '#57d500',
-                    transition: 'all .3s ease'
-                  }}>
-                    &#x25cf;
-                  </span> {
-                    'Доступен'
-                  }
-                </span>
-
-              );
-            }else{
+        dataIndex: 'ONN',
+        key: 'ONN',
+        render: (text,row) => {
+          if(row.children.length>0){
+            return false;
+          }else if (parseInt(row.ONN,10)>0) {
+            return (
+              <span>
+                <span style={{
+                  color: '#4dbd74 ',
+                  transition: 'all .3s ease'
+                }}>
+                  &#x25cf;
+                </span> {
+                  'Доступно'
+                }
+              </span>
+            );
+          }else{
               return (
                 <span>
                   <span style={{
@@ -74,71 +73,55 @@ class Servers extends Component {
                   }
                 </span>
               );
-            }
+          }
+        }
+      },
+      {
+        title: 'Количество доступных/Всего',
+        dataIndex: 'F_ID',
+        key: 'F_ID',
+        render: (text,row) => {
+          if(row.children.length>0){
+            var count = _.filter(row.children, function(o) {return parseInt(o.ONN,10) >0});
+            return count.length + '/' + row.children.length;
+          }
         }
       }
-      // {
-      //   title: 'Количество доступных/Всего',
-      //   dataIndex: 'servers',
-      //   key: 'servers',
-      //   render: (text,row) => {
-      //     if(row.length>0){
-      //       var count = _.filter(row.children, function(o) {return parseInt(o.ONN,10) >0});
-      //       return count.length + '/' + row.children.length;
-      //     }else{
-      //       if(parseInt(text,10)>0){
-      //         return (
-      //           <span>
-      //             <span style={{
-      //               color: '#57d500',
-      //               transition: 'all .3s ease'
-      //             }}>
-      //               &#x25cf;
-      //             </span> {
-      //               'Доступен'
-      //             }
-      //           </span>
-      //
-      //         );
-      //       }else{
-      //         return (
-      //           <span>
-      //             <span style={{
-      //               color: '#ff2e00',
-      //               transition: 'all .3s ease'
-      //             }}>
-      //               &#x25cf;
-      //             </span> {
-      //               'Недоступно'
-      //             }
-      //           </span>
-      //         );
-      //       }
-      //     }
-      //   }
-      // }
      ];
     return(
       <div>
-        {
-            this.state.data.length > 0 ?
-            <Card>
-              <CardHeader>
-                Серверы Nomad
-              </CardHeader>
-              <CardBody>
-                <Table
-                    rowKey="key"
-                    className="components-table-demo-nested"
-                    columns={columnss}
-                    dataSource={this.state.data}
-                    pagination={{ pageSize: 20 }}
-                />
-            </CardBody>
-          </Card>
-          :
-            <h4>Нету отделений</h4>
-        }
+        <Row>
+            <Col md={1}>
+                <Button color="primary" onClick={this.filter}>Недоступные</Button>
+            </Col>
+            <Col md={1}>
+                <Button color="primary" onClick={this.reset}>Все</Button>
+            </Col>
+        </Row>
+        <br />
+        <Row>
+            <Col xl={12}>
+              {
+                this.state.data.length > 0 ?
+                <Card>
+                  <CardHeader>
+                    Серверы Nomad
+                  </CardHeader>
+                  <CardBody>
+                    <Table
+                        rowKey="key"
+                        className="components-table-demo-nested"
+                        columns={columnss}
+                        dataSource={this.state.data}
+                        pagination={{ pageSize: 20 }}
+                    />
+                </CardBody>
+              </Card>
+              :
+                <h4>Нету отделений</h4>
+            }
+            </Col>
+        </Row>
       </div>
     )
   }

@@ -19,7 +19,10 @@ const mapStateToProps = (state) => {
     filter_filial: state.filter.filial,
     filter_branch: state.filter.branch,
 
-    branch_user_filter: branchUserFilter(state)
+    branch_user_filter: branchUserFilter(state),
+    //slaids
+    state_slaid: state.state_slaid,
+    column_count: state.column_count
   }
 }
 

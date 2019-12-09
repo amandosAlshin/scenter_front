@@ -137,6 +137,13 @@ class User extends Component {
         />
     )
   }
+  componentDidUpdate(){
+    if(this.props.useredit_success.status){
+      this.props.default()
+      this.props.history.push("/user/user-list/");
+      alert('Пользователь удачно изменен');
+    }
+  }
   componentWillMount(){
     this.props.usersInfo(this.props.match.params.id);
   }

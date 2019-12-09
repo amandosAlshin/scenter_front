@@ -14,6 +14,8 @@ import { EmployeeGroupAction } from '../../actions/employee_group_list'
 import { WindowStatesAction } from '../../actions/window_state'
 import { RoleListAction } from '../../actions/role_list'
 import {checkKey} from '../../actions/checkKey'
+import {itemSlaid} from '../../actions/item_slaid'
+import {changeCount} from '../../actions/column_count'
 const mapStateToProps = (state) => {
   return {
     //user check
@@ -56,7 +58,11 @@ const mapStateToProps = (state) => {
     //selectors
     alarm_notification: alarmNotification(state),
     branch_user_filter: branchUserFilter(state),
-    ten_minute_waits: tenMinuteWaits(state)
+    ten_minute_waits: tenMinuteWaits(state),
+
+    //slaids
+    state_slaid: state.state_slaid,
+    column_count: state.column_count,
 
   }
 }
@@ -91,8 +97,13 @@ const mapDispatchToProps = (dispatch) => ({
   },
   checkKey: ()=>{
     dispatch(checkKey())
+  },
+  changeSlaids: (slaids)=>{
+    dispatch(itemSlaid(slaids))
+  },
+  changeCount: (count)=>{
+    dispatch(changeCount(count))
   }
-
 })
 export const LayoutCont = withRouter(connect(
  mapStateToProps,

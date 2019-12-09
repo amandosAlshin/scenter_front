@@ -1,6 +1,6 @@
 import User from '../../views/Users/User'
 import {UserInfoAction} from '../../actions/user_info'
-import {userEdit} from '../../actions/user_edit'
+import {userEdit,stateDefault} from '../../actions/user_edit'
 import {connect} from 'react-redux'
 import { withRouter } from 'react-router-dom';
 const mapStateToProps = (state) => {
@@ -22,6 +22,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   usersInfo: (user_id)=>{
       dispatch(UserInfoAction(user_id));
+  },
+  default: ()=>{
+    dispatch(stateDefault())
   },
   usersEdit: (values)=>{
       dispatch(userEdit(values));

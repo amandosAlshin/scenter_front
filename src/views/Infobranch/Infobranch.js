@@ -50,10 +50,6 @@ class Infobranch extends Component {
     }
   }
   componentDidUpdate(prevProps, prevState){
-    console.log(
-      this.props.filter,
-      this.props.filter_branch
-    );
     if(this.props.filter && this.props.filter_branch && (prevProps.filter_filial !== this.props.filter_filial || prevProps.filter_branch !== this.props.filter_branch)){
         this.props.history.push(`/detail/branch-child/${this.props.filter_filial}/infobranch/branch`);
     }
@@ -68,11 +64,12 @@ class Infobranch extends Component {
               Показатели по ожиданию и обслуживанию клиентов
             </CardHeader>
             <CardBody>
-              <div className="chart-wrapper">
+              <div style={{overflow: "auto"}} className="chart-wrapper">
               <Chart
                 height={400}
+                width={this.props.branch_group ? this.props.branch_group.length>8 ?  2400 : 900 : false}
                 data={this.chartData(this.props.branch_group)}
-                forceFit
+                forceFit={false}
                 onAxisLabelClick={(e)=>{this.clickBranch(e.target._attrs.text);}}
               >
                   <Axis name="f_name" />
@@ -86,7 +83,7 @@ class Infobranch extends Component {
                   <Geom
                     type="interval"
                     position="f_name*value"
-                    color={"type"}
+                    color={['type', '#ffc107-#1890FF-#ff0000']}
                     adjust={[
                       {
                         type: "dodge",

@@ -42,6 +42,7 @@ class Users extends Component {
                       <th scope="col">Пароль</th>
                       <th scope="col">Роль</th>
                       <th scope="col">Дата регистраций</th>
+                      <th scope="col">Время последнего посещения</th>
                       <th scope="col">Опций</th>
                     </tr>
                   </thead>
@@ -52,6 +53,7 @@ class Users extends Component {
                           <td>{user.password}</td>
                           <td>{user.role === 0 ? 'Администратор' : user.role === 1 ? 'Директор' : user.role === 2 ? 'Директор филиала' : user.role === 3 ? 'Нач. отделение' : false}</td>
                           <td>{user.ins_date}</td>
+                          <td>{user.sign_in_date}</td>
                           <td><Badge onClick={()=>this.props.history.push(`/user/user-list/${user.id}`)} color='danger'>Изменить</Badge>&nbsp;&nbsp;<Badge onClick={()=>this.deleteUser(user.id)} color='primary'>Удалить</Badge></td>
                       </tr>
                     )}

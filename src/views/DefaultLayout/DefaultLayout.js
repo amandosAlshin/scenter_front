@@ -76,7 +76,7 @@ class DefaultLayout extends Component {
      const now = Date.now();
      const body = value;
      const tag = now;
-     const icon = "../../assets/img/brand/logo.svg";
+     const icon = "../../assets/img/brand/logo.png";
      const options = {
        tag: tag,
        body: body,
@@ -214,7 +214,7 @@ class DefaultLayout extends Component {
             </Container>
           </main>
           <AppAside  fixed>
-            <DefaultAside branchFilter={this.props.branchFilter} branches={this.props.branch_user_filter}/>
+            <DefaultAside column_count={this.props.column_count.column_count}  changeCount={this.props.changeCount} state_slaid={this.props.state_slaid} changeSlaids={this.props.changeSlaids}  branchFilter={this.props.branchFilter} branches={this.props.branch_user_filter}/>
           </AppAside>
         </div>
         <AppFooter>

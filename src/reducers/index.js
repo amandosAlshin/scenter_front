@@ -16,7 +16,8 @@ import employee_group_add from './employee_group_add'
 import employee_group_list from './employee_group_list'
 import window_state from './window_state'
 import role_list from './role-list'
-
+import state_slaid from './state_slaid'
+import column_count from './column_count'
 import { reducer as formReducer } from 'redux-form'
 const reducers = combineReducers({
   router: routerReducer,
@@ -36,7 +37,9 @@ const reducers = combineReducers({
   employee_group_add: employee_group_add,
   employee_group_list: employee_group_list,
   window_state: window_state,
-  role_list: role_list
+  role_list: role_list,
+  state_slaid: state_slaid,
+  column_count: column_count
 })
 
 export default reducers
