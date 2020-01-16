@@ -67,6 +67,36 @@ class ChildBranch extends Component {
             }
           }
           break;
+        case 'raiting':
+          if(this.props.branchs && this.props.rating_group){
+            type_value = this.props.match.params.data;
+            this.setState({
+              header: "Количество билетов по оценке  '" + decodeURI(this.props.match.params.data) +"'"
+            })
+            data_filter = _.filter(this.props.rating_group, function(o) {return o.rates === type_value});
+            data = this.branchList(
+              data_filter,
+              this.props.branchs
+            );
+            if(data){
+              filial = this.props.match.params.filial;
+              branch = _.filter(data, function(o) {return parseInt(o.f_parent_id,10) === parseInt(filial,10)});
+              if(branch){
+                if(branch.length===1){
+                  this.props.history.push(`/detail/queue-parent/${branch[0].f_id}/${this.props.match.params.type}/${this.props.match.params.data}`);
+                }else{
+                  filial_info = _.filter(this.props.branchs, function(o) {return parseInt(o.F_ID,10) === parseInt(filial,10)});
+                  if(filial_info.length>0){
+                    this.setState({filial_name: filial_info[0].F_NAME});
+                  }else{
+                      this.setState({filial_name: 'Филиал не найден'});
+                  }
+                  this.setState({data: branch});
+                }
+              }
+            }
+          }
+          break;
         case 'queue':
           if(this.props.branchs && this.props.queue_group){
             type_value = this.props.match.params.data;
@@ -210,6 +240,36 @@ class ChildBranch extends Component {
             }
           }
           break;
+        case 'raiting':
+          if(props.branchs && props.rating_group){
+            type_value = props.match.params.data;
+            this.setState({
+              header: "Количество билетов по оценке  '" + decodeURI(props.match.params.data) +"'"
+            })
+            data_filter = _.filter(props.rating_group, function(o) {return o.rates === type_value});
+            data = this.branchList(
+              data_filter,
+              props.branchs
+            );
+            if(data){
+              filial = props.match.params.filial;
+              branch = _.filter(data, function(o) {return parseInt(o.f_parent_id,10) === parseInt(filial,10)});
+              if(branch){
+                if(branch.length===1){
+                  props.history.push(`/detail/queue-parent/${data[0].f_id}/${props.match.params.type}/${props.match.params.data}`);
+                }else{
+                  filial_info = _.filter(props.branchs, function(o) {return parseInt(o.F_ID,10) === parseInt(filial,10)});
+                  if(filial_info.length>0){
+                    this.setState({filial_name: filial_info[0].F_NAME});
+                  }else{
+                      this.setState({filial_name: 'Филиал не найден'});
+                  }
+                  this.setState({data: branch});
+                }
+              }
+            }
+          }
+          break;
         case 'queue':
           if(props.branchs && props.queue_group){
             type_value = props.match.params.data;
@@ -322,6 +382,12 @@ class ChildBranch extends Component {
     var branch_id = [];
     switch(this.props.match.params.type) {
       case 'state':
+        branch_id = _.filter(this.state.data, function(o) {return o.f_name === e.item.dataValue});
+        if(branch_id.length>0){
+          this.props.history.push(`/detail/queue-parent/${branch_id[0].f_id}/${this.props.match.params.type}/${this.props.match.params.data}`);
+        }
+      break;
+      case 'raiting':
         branch_id = _.filter(this.state.data, function(o) {return o.f_name === e.item.dataValue});
         if(branch_id.length>0){
           this.props.history.push(`/detail/queue-parent/${branch_id[0].f_id}/${this.props.match.params.type}/${this.props.match.params.data}`);

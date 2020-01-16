@@ -1,5 +1,5 @@
 const initialState = {
-  state_slaid: [true,true,true,true,true]
+  state_slaid: [true,true,true,true,true,true]
 }
 const state_slaid =(state = initialState, action)=> {
   switch (action.type) {

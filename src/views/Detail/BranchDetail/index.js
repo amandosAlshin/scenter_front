@@ -55,6 +55,26 @@ class BranchDetail extends Component {
             }
           }
           break;
+        case 'raiting':
+          if(this.props.branchs && this.props.rating_group){
+            type_value = this.props.match.params.data;
+            this.setState({
+              header: "Количество билетов по оценке  '" + decodeURI(this.props.match.params.data) +"'"
+            });
+            data_filter = _.filter(this.props.rating_group, function(o) {return o.rates === type_value});
+            data = this.branchList(
+              data_filter,
+              this.props.branchs
+            );
+            if(data){
+              if(data.length===1){
+                this.props.history.push(`/detail/branch-child/${data[0].f_id}/${this.props.match.params.type}/${this.props.match.params.data}`);
+              }else{
+                this.setState({data: data});
+              }
+            }
+          }
+          break;
         case 'queue':
             if(this.props.branchs && this.props.queue_group){
               type_value = this.props.match.params.data;
@@ -254,6 +274,26 @@ class BranchDetail extends Component {
             }
           }
           break;
+        case 'raiting':
+          if(props.branchs && props.rating_group){
+            type_value = props.match.params.data;
+            this.setState({
+              header: "Количество билетов по оценке  '" + decodeURI(props.match.params.data) +"'"
+            });
+            data_filter = _.filter(props.rating_group, function(o) {return o.rates === type_value});
+            data = this.branchList(
+              data_filter,
+              props.branchs
+            );
+            if(data){
+              if(data.length===1){
+                props.history.push(`/detail/branch-child/${data[0].f_id}/${props.match.params.type}/${props.match.params.data}`);
+              }else{
+                this.setState({data: data});
+              }
+            }
+          }
+          break;
         case 'queue':
           if(props.branchs && props.queue_group){
             type_value = props.match.params.data;
@@ -429,6 +469,12 @@ class BranchDetail extends Component {
     var filial_id=[];
     switch(this.props.match.params.type) {
       case 'state':
+        filial_id = _.filter(this.state.data, function(o) {return o.f_name === e.item.dataValue});
+        if(filial_id.length>0){
+          this.props.history.push(`/detail/branch-child/${filial_id[0].f_id}/${this.props.match.params.type}/${this.props.match.params.data}`);
+        }
+      break;
+      case 'raiting':
         filial_id = _.filter(this.state.data, function(o) {return o.f_name === e.item.dataValue});
         if(filial_id.length>0){
           this.props.history.push(`/detail/branch-child/${filial_id[0].f_id}/${this.props.match.params.type}/${this.props.match.params.data}`);

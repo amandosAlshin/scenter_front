@@ -34,7 +34,8 @@ export const userEdit = (values,history)=>{
           password: values.password,
           email: values.email,
           user_id: values.user_id,
-          send_n: values.send_n
+          send_n: values.send_n,
+          count_n: values.count_n
         })
       })
       .then(function (response) {

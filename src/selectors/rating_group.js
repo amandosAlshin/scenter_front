@@ -10,7 +10,6 @@ export const ratingGroup = createSelector(
   [ ticketsStatus, tickets,filter,filter_filial,filter_branch ],
   (status,data,filter,filter_filial,filter_branch) => {
     if(status){
-      if(branchsStatus && ticketsStatus){
         var tickets = data;
         if(filter && filter_branch){
           tickets = _.filter(data, function(o) {
@@ -29,25 +28,25 @@ export const ratingGroup = createSelector(
           tickets = tickets_branch;
         }
       var completed = _.filter(tickets, function(o) {
-          if(o.state == "COMPLETED") {
+          if(o.state === "COMPLETED") {
               return o;
           }
       });
       var result = groupBy(completed, 'rating', 'rating', 'tickets');
       for(var i=0; i<=result.length-1; i++){
-          if(result[i].rating == "5"){
+          if(result[i].rating === "5"){
               result[i].rates = "Отлично";
               result[i].count = result[i].tickets.length;
-          }else if(result[i].rating == "4"){
+          }else if(result[i].rating === "4"){
               result[i].rates = "Хорошо";
               result[i].count = result[i].tickets.length;
-          }else if(result[i].rating == "3"){
+          }else if(result[i].rating === "3"){
               result[i].rates = "Средний";
               result[i].count = result[i].tickets.length;
-          }else if(result[i].rating == "2"){
+          }else if(result[i].rating === "2"){
               result[i].rates = "Плохо";
               result[i].count = result[i].tickets.length;
-          }else if(result[i].rating == "1"){
+          }else if(result[i].rating === "1"){
               result[i].rates = "Очень плохо";
               result[i].count = result[i].tickets.length;
           }else{
@@ -56,8 +55,9 @@ export const ratingGroup = createSelector(
           }
       }
       return result;
-    }else{
-      return false;
-    }
+
+  }else {
+    return false;
   }
+}
 )

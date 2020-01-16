@@ -63,8 +63,9 @@ class ChangeBranch extends Component{
       });
       this.props.changeBranch(arr,2);
     }else if (this.state.access === '3') {
-
       this.props.changeBranch([this.state.branch],3);
+    }else if (this.state.access === '5') {
+      this.props.changeBranch([this.state.branch],5);
     }else {
       this.props.changeBranch(false,false);
     }
@@ -161,7 +162,33 @@ class ChangeBranch extends Component{
                     </FormGroup>
                   </div>
               :
-                false
+                this.state.access === '5' ?
+                  <div>
+                    <FormGroup>
+                      <Label htmlFor="ccfilial">Филиал</Label>
+                      <Input onChange={this.filialChange} type="select" name="ccfilial" id="ccfilial">
+                        <option value={0}>Выберите филиал</option>
+                        {
+                          this.props.branches.map(function(item,index){
+                            return(<option key={index} value={item.F_ID}>{item.F_NAME}</option>)
+                          })
+                        }
+                      </Input>
+                    </FormGroup>
+                    <FormGroup>
+                      <Label htmlFor="ccbranch">Отделение</Label>
+                      <Input onChange={(e)=>{e.target.value === 0 ? this.setState({branch: false}) : this.setState({branch: e.target.value})}} disabled={this.state.branchList.length===0} type="select" name="ccbranch" id="ccbranch">
+                        <option value={0}>Выберите отделение</option>
+                        {
+                          this.state.branchList.map(function(item,index){
+                            return(<option key={index} value={item.F_ID}>{item.F_NAME}</option>)
+                          })
+                        }
+                      </Input>
+                    </FormGroup>
+                  </div>
+                :
+                  false
             }
           </ModalBody>
           <ModalFooter>
@@ -214,6 +241,17 @@ class ChangeBranch extends Component{
               onChange={this.changeAccess}
             />{' '}
             <Label check className="form-check-label">Нач. отделение</Label>
+          </FormGroup>
+          <FormGroup check inline className="radio">
+            <Field
+              name="role"
+              component="input"
+              type="radio"
+              value="5"
+              checked={this.state.access === '5'}
+              onChange={this.changeAccess}
+            />{' '}
+            <Label check className="form-check-label">Инженер</Label>
           </FormGroup>
         </div>
       </div>

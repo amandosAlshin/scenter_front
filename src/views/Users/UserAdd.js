@@ -143,6 +143,12 @@ class UserAdd extends Component {
                 component={renderField}
                 label={{icon: false,name: "Отправлять уведомление"}}
               />
+              <Field
+                name="count_n"
+                type="text"
+                component={renderField}
+                label={{icon: false,name: "Количество проблемных билетов для отправки уведомление"}}
+              />
               <ChangeBranch branches={this.props.branch_list_tree} changeBranch={this.changeBranch}/>
               <br />
               <Button type="submit" color="success" block>Создать пользователя</Button>

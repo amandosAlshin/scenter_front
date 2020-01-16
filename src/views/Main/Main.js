@@ -33,10 +33,12 @@ class Main extends Component {
     const { DataView } = DataSet;
     const { Text } = Guide;
     const state_group = new DataView();
+
     const queue_group = new DataView();
     const overWaits_group = new DataView();
     const waits_group = new DataView();
     const serv_group = new DataView();
+    const rating_group = new DataView();
     const timeConvert = (minute)=>{
       var num = minute;
       var hours = (num / 60);
@@ -83,6 +85,14 @@ class Main extends Component {
     }
     if(this.props.serv_group){
       serv_group.source(this.props.serv_group).transform({
+        type: "serv",
+        field: "serv",
+        dimension: "w_name",
+        as: "serv"
+      });
+    }
+    if(this.props.rating_group){
+      rating_group.source(this.props.rating_group).transform({
         type: "serv",
         field: "serv",
         dimension: "w_name",
@@ -490,6 +500,88 @@ class Main extends Component {
                               />
                             </Geom>
                           </Chart>
+                        )
+                      }
+                      </div>
+                    </CardBody>
+                  </Card>
+                :
+                  false
+            }
+            {
+                state_slaid[5] ?
+                  <Card>
+                    <CardHeader>
+                      Общие показатели по оценке
+                    </CardHeader>
+                    <CardBody>
+                      <div className="chart-wrapper">
+                      {
+                        this.state.mounted && (
+                          <Chart
+                              data={rating_group}
+                              scale={cols}
+                              padding="auto"
+                              height={500}
+                              forceFit={true}
+                              animate={false}
+                              onLegendItemClick={(e)=>{this.props.history.push('/detail/branch/raiting/'+e.data.value)}}
+                            >
+                              <Coord type={"theta"} radius={0.75} innerRadius={0.6} />
+                              <Axis name="count" />
+                              <Legend
+                                position="bottom"
+                              />
+                              <Tooltip
+                                showTitle={false}
+                                itemTpl="<li><span style=&quot;background-color:{color};&quot; class=&quot;g2-tooltip-marker&quot;></span>{name}: {value}</li>"
+                              />
+                              <Guide>
+                                <Text
+                                    position={["50%", "50%"]}
+                                    content={this.props.rating_group ? _.sumBy(this.props.rating_group,'count') : false}
+                                    style={{
+                                      lineHeight: "240px",
+                                      fontSize: "32",
+                                      fill: "#262626",
+                                      color: "#8c8c8c",
+                                      textAlign: "center",
+                                      width: "10em"
+                                    }}
+                                    alignX="middle"
+                                    alignY="middle"
+                                  />
+                              </Guide>
+                              <Geom
+                                color={['rates', (rates)=>{
+                                    if(rates === "Очень плохо")
+                                      return '#ff0000';
+                                  }]}
+                                type="intervalStack"
+                                position="count"
+
+                                tooltip={[
+                                  "rates*count",
+                                  (rates, count) => {
+                                    return {
+                                      name: rates,
+                                      value: count
+                                    };
+                                  }
+                                ]}
+                                style={{
+                                  lineWidth: 1,
+                                  stroke: "#fff"
+                                }}
+                              >
+                                <Label
+                                  content="count"
+                                  formatter={(val, item) => {
+                                    return item.point.rates + ": " + val;
+                                  }}
+                                />
+                              </Geom>
+                            </Chart>
                         )
                       }
                       </div>

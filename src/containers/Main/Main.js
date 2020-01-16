@@ -6,6 +6,7 @@ import { queueGroup } from '../../selectors/queue_group'
 import { overWaitsGroup } from '../../selectors/overWaits_group'
 import { waitsGroup } from '../../selectors/waits_group'
 import { servGroup } from '../../selectors/serv_group'
+import { ratingGroup } from '../../selectors/rating_group'
 import { branchUserFilter } from '../../selectors/branch_user_filter_list'
 const mapStateToProps = (state) => {
   return {
@@ -14,6 +15,7 @@ const mapStateToProps = (state) => {
     overWaits_group: overWaitsGroup(state),
     waits_group: waitsGroup(state),
     serv_group: servGroup(state),
+    rating_group: ratingGroup(state),
 
     filter: state.filter.filter,
     filter_filial: state.filter.filial,

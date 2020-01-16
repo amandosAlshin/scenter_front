@@ -214,6 +214,10 @@ class DefaultAside extends Component {
                    <Input checked={state_slaid[4]} onChange={()=>this.ItemSlaid(4)} className="form-check-input" type="checkbox" id="radio3" name="radios" value="option5" />
                    <Label check className="form-check-label" htmlFor="radio3">График 5</Label>
                  </FormGroup>
+                 <FormGroup check className="radio">
+                   <Input checked={state_slaid[5]} onChange={()=>this.ItemSlaid(5)} className="form-check-input" type="checkbox" id="radio3" name="radios" value="option6" />
+                   <Label check className="form-check-label" htmlFor="radio3">График 6</Label>
+                 </FormGroup>
                </form>
              </Col>
            </FormGroup>

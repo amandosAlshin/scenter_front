@@ -9,6 +9,7 @@ import { overWaitsGroup } from '../../selectors/overWaits_group'
 import { waitsGroup } from '../../selectors/waits_group'
 import { servGroup } from '../../selectors/serv_group'
 import { branchGroup } from '../../selectors/branch_group';
+import { ratingGroup } from '../../selectors/rating_group'
 const mapStateToProps = (state) => {
   return {
     state_group: stateGroup(state),
@@ -18,6 +19,7 @@ const mapStateToProps = (state) => {
     overWaits_group: overWaitsGroup(state),
     waits_group: waitsGroup(state),
     serv_group: servGroup(state),
+    rating_group: ratingGroup(state),
     branch_group: branchGroup(state)
   }
 }

@@ -65,6 +65,25 @@ class QueueChildDetailTable extends Component {
               }
             }
             break;
+          case 'raiting':
+            if(this.props.queues && this.props.rating_group){
+              type_value = this.props.match.params.data;
+              this.setState({
+                header: "Количество билетов по оценке '" + decodeURI(this.props.match.params.data) +"'"
+              })
+              data_filter = _.filter(this.props.rating_group, function(o) {return o.rates === type_value});
+              data = this.queueList(
+                data_filter,
+                this.props.queues,
+                this.props.match.params.branch,
+                this.props.match.params.queue
+              );
+              if(data.length>0){
+                this.setState({data: data});
+                this.branchInfo(this.props.match.params.branch);
+              }
+            }
+            break;
           case 'employee':
             if(this.props.queues && this.props.employee_group){
               type_value = this.props.match.params.data;
@@ -177,6 +196,26 @@ class QueueChildDetailTable extends Component {
               header: "Количество билетов со статусом '" + decodeURI(props.match.params.data) +"'"
             });
             data_filter = _.filter(props.state_group, function(o) {return o.namess === type_value});
+            data = this.queueList(
+              data_filter,
+              props.queues,
+              props.match.params.branch,
+              props.match.params.queue
+            );
+
+            if(data.length>0){
+              this.setState({data: data});
+              this.branchInfo(props.match.params.branch);
+            }
+          }
+          break;
+        case 'raiting':
+          if(props.queues && props.rating_group){
+            type_value = props.match.params.data;
+            this.setState({
+              header: "Количество билетов по оценке '" + decodeURI(props.match.params.data) +"'"
+            });
+            data_filter = _.filter(props.rating_group, function(o) {return o.rates === type_value});
             data = this.queueList(
               data_filter,
               props.queues,

@@ -35,6 +35,7 @@ export const userAdd = (values,history)=>{
           role: values.role,
           email: values.email,
           state_n: values.state_n,
+          count_n: values.count_n,
           id_branch: values.branches
         })
       })

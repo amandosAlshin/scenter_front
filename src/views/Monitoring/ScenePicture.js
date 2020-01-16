@@ -365,6 +365,7 @@ class ScenePicture extends Component {
           <Col key={index} xs={sizeBlock} sm={sizeBlock} md={sizeBlock}>
             {
               item.windows.map(function(window,ind){
+                console.log('window',);
                 return(
                     <div onClick={() => {this.toggle(ind,tooltip)}} id={tooltip+window.windowid}  key={ind} className="window">
                       <div className={window.ticket.length>0 ? window.ticket[0].servover ? 'pulsating-circle primary' : window.ticket[0].preservover ? 'pulsating-circle warning' : 'pulsating-circle' : 'pulsating-circle'} ></div>
@@ -380,7 +381,7 @@ class ScenePicture extends Component {
                         <span>{window.winno}</span>
                       </div>
 
-                      <img alt={"window" + window.winno} className='workTable' src={img}/>
+                      <img alt={"window" + window.winno} className='workTable' src={window.idoperator >0 ? "images/m-table-red.png" : img}/>
                       {
                         window.ticket.length>0 ?
                           <div className="clientPicture">

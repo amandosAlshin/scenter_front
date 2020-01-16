@@ -220,6 +220,19 @@ class User extends Component {
                               </td>
                             </tr>
                             <tr>
+                              <td>Количество проблемных билетов для отправки уведомление</td>
+                              <td>
+                              {this.props.user_success.data[0].count_n}
+                              </td>
+                              <td style={{textAlign: "center"}}>
+                              <Field
+                                name="count_n"
+                                type="text"
+                                component={renderField}
+                              />
+                              </td>
+                            </tr>
+                            <tr>
                               <td>Роль</td>
                               <td>Роль</td>
                               <td><strong>{this.props.user_success.data[0].role === 0 ? 'Администратор'

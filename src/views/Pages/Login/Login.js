@@ -98,7 +98,7 @@ class Login extends Component {
                       </form>
                     </CardBody>
                   </Card>
-                  <Card  className="text-white py-5 d-md-down-none" style={{ width: 44 + '%', backgroundColor: "#767575"}}>
+                  <Card  className="text-white py-5 d-md-down-none" style={{ width: 44 + '%', backgroundColor: "#133457"}}>
                     <CardBody className="text-center">
                       <div>
                         <img style={{width: "85px"}} src={'/assets/img/logo.png'} alt="logo"/>

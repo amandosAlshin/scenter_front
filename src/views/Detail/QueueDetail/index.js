@@ -83,6 +83,26 @@ class QueueDetail extends Component {
               }
             }
           break;
+          case 'raiting':
+            if(this.props.queues && this.props.rating_group){
+              type_value = this.props.match.params.data;
+              this.setState({
+                header: "Количество билетов по оценке '" + decodeURI(this.props.match.params.data) +"'"
+              })
+              data_filter = _.filter(this.props.rating_group, function(o) {return o.rates === type_value});
+              data = this.queueList(
+                data_filter,
+                this.props.queues,
+                this.props.match.params.branch,
+              );
+              if(data.length===1){
+                this.props.history.push(`/detail/queue-table-child/${this.props.match.params.branch}/${data[0].idss}/${this.props.match.params.type}/${this.props.match.params.data}`);
+              }else{
+                this.setState({data: data});
+                this.branchInfo(this.props.match.params.branch);
+              }
+            }
+          break;
           case 'employee':
             if(this.props.queues && this.props.employee_group){
                    type_value = this.props.match.params.data;
@@ -192,6 +212,26 @@ class QueueDetail extends Component {
               })
               data_filter = _.filter(props.state_group, function(o) {return o.namess === type_value});
               var data = this.queueList(
+                data_filter,
+                props.queues,
+                props.match.params.branch,
+              );
+              if(data.length===1){
+                props.history.push(`/detail/queue-table-child/${props.match.params.branch}/${data[0].idss}/${props.match.params.type}/${props.match.params.data}`);
+              }else{
+                this.setState({data: data});
+                this.branchInfo(this.props.match.params.branch);
+              }
+            }
+          break;
+          case 'raiting':
+            if(props.queues && props.rating_group){
+              type_value = props.match.params.data;
+              this.setState({
+                header: "Количество билетов по оценке '" + decodeURI(props.match.params.data) +"'"
+              })
+              data_filter = _.filter(props.rating_group, function(o) {return o.rates === type_value});
+              data = this.queueList(
                 data_filter,
                 props.queues,
                 props.match.params.branch,
