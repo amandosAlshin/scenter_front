@@ -1,0 +1,26 @@
+// <TabPane tabId="4">
+//     {
+//       this.props.cameraSucces.status ?
+//         <ul class="list-group">
+//           {
+//             this.props.cameraSucces.data.map((item)=>
+//                 <li className="list-group-item active">{item.rtsplink}</li>
+//             )
+//           }
+//         </ul>
+//       :
+//         false
+//     }
+//     <Button onClick={this.stream()}>Stream</Button>
+//     <canvas width="500px" height="500px" id="videoCanvas"></canvas>
+// </TabPane>
+
+
+<NavItem>
+  <NavLink
+    className={classnames({ active: this.state.activeTab === '4' })}
+    onClick={() => { this.toggle('4'); this.cameraListEvent();}}
+  >
+    Камеры
+  </NavLink>
+</NavItem>

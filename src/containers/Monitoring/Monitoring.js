@@ -10,6 +10,7 @@ import { waitsBranchGroup } from '../../selectors/waits_group_branch'
 import { servBranchGroup } from '../../selectors/serv_group_branch'
 import {TicketListAction} from '../../actions/ticket_list'
 import { WindowStatesAction } from '../../actions/window_state'
+import {CameraListAction} from '../../actions/camera_list'
 const mapStateToProps = (state) => {
   return {
     filter: state.filter.filter,
@@ -23,7 +24,11 @@ const mapStateToProps = (state) => {
     serv_group_branch: servBranchGroup(state),
     role_group: roleGroup(state),
     tickets: state.ticket_list.success.data,
-    windows: state.window_state.success.data
+    windows: state.window_state.success.data,
+    //users list
+    loading_camera_list: state.camera_list.loading,
+    errorserver_camera_list: state.camera_list.errorserver,
+    camera_list_success: state.camera_list.success
   }
 }
 
@@ -34,6 +39,9 @@ const mapDispatchToProps = (dispatch) => ({
   ticketList: (history,update)=>{
       dispatch(TicketListAction(history,update));
   },
+  cameraList: (branch_id)=>{
+      dispatch(CameraListAction(branch_id));
+  }
 })
 export const MonitoringCont = withRouter(connect(
  mapStateToProps,

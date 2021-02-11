@@ -68,6 +68,11 @@ export default {
       }          // optional class names space delimited list for title item ex: "text-center"
     },
     {
+      name: 'Камеры',
+      url: '/camera/camera-list',
+      icon: 'icon-layers',
+    },
+    {
       name: 'Серверы',
       url: '/nomad/server-list',
       icon: 'icon-layers',

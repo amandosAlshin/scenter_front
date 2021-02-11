@@ -8,6 +8,11 @@ import user_add from './user_add'
 import user_list from './user_list'
 import user_info from './user_info'
 import user_edit from './user_edit'
+import camers_all_list from './camers_all_list'
+import camera_list from './camera_list'
+import camera_add from './camera_add'
+import camera_info from './camera_info'
+import camera_delete from './camera_delete'
 import login from './login'
 import user_check from './user_check'
 import user_delete from './user_delete'
@@ -30,6 +35,9 @@ const reducers = combineReducers({
   user_list: user_list,
   user_info: user_info,
   user_edit: user_edit,
+  camera_list: camera_list,
+  camers_all_list: camers_all_list,
+  camera_delete: camera_delete,
   login: login,
   user_check: user_check,
   user_delete: user_delete,
@@ -39,6 +47,8 @@ const reducers = combineReducers({
   window_state: window_state,
   role_list: role_list,
   state_slaid: state_slaid,
+  camera_add: camera_add,
+  camera_info: camera_info,
   column_count: column_count
 })
 

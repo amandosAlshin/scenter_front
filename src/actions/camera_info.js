@@ -1,37 +1,37 @@
 import {SERVER_DISPATCH,DISPATCH_SUCCESS,DISPATCH_ERROR,SERVER} from '../constants/';
 import axios from 'axios';
 export const serverDispatch = ()=> ({
-  type: SERVER_DISPATCH+'BRANCH_LIST',
+  type: SERVER_DISPATCH+' CAMERA_INFO',
 })
 export const dispatchSuccess = (data)=> ({
-  type: DISPATCH_SUCCESS+'BRANCH_LIST',
+  type: DISPATCH_SUCCESS+'CAMERA_INFO',
   data: data,
 })
 export const dispatchError = (msg)=> ({
-  type: DISPATCH_ERROR+'BRANCH_LIST',
+  type: DISPATCH_ERROR+'CAMERA_INFO',
   msg: msg
 })
-export const BranchListAction = (type=false)=>{
+export const CameraInfoAction = (camera_id)=>{
   return (dispatch,getState)=>{
     dispatch(serverDispatch())
+      var querystring = require('querystring');
       const AuthStr = 'Bearer '.concat(sessionStorage.nomad_auth);
       axios({
         method: 'post',
-        url: SERVER+'api/branch/branch_list',
+        url: SERVER+'api/camera/camerainfo',
         headers: {
           'crossDomain': true,
           'Authorization': AuthStr,
           'Content-type': 'application/x-www-form-urlencoded'
-        }
+        },
+        data: querystring.stringify({
+          camera_id: camera_id
+        })
       })
       .then(function (response) {
         if (response.data.type === 'error') {
           dispatch(dispatchError(response.data.msg));
         }else if(response.data.type === 'ok'){
-          for (var prop in response.data.data) {
-            let name_branch = response.data.data[prop].F_NAME.split(";");
-            response.data.data[prop].F_NAME = name_branch[0].slice(3,name_branch[0].length);
-          }
           dispatch(dispatchSuccess(response.data.data));
         }else{
           dispatch(dispatchError('server no response'));

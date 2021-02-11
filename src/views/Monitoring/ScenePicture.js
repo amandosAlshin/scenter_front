@@ -8,10 +8,15 @@ import {
   TabContent,
   TabPane,
   PopoverBody,
-  PopoverHeader
+  PopoverHeader,
+  Button
 } from 'reactstrap';
 import Table from 'antd/lib/table';
 import './css';
+var jsmpeg = require('jsmpeg');
+
+
+
 class ScenePicture extends Component {
   constructor(props){
     super(props)
@@ -73,7 +78,7 @@ class ScenePicture extends Component {
             }
           }
       }
-      this.setState({data: this.props.data,tooltipWaitsManagerOpen: manager_waits,tooltipWaitsCachierOpen: cachier_waits,tooltipCachierOpen: cachier,tooltipManagerOpen: manager});
+        this.setState({data: this.props.data,tooltipWaitsManagerOpen: manager_waits,tooltipWaitsCachierOpen: cachier_waits,tooltipCachierOpen: cachier,tooltipManagerOpen: manager});
     }
   }
   componentWillReceiveProps(props){
@@ -128,7 +133,6 @@ class ScenePicture extends Component {
       }
   }
   componentDidUpdate(prevProps, prevState){
-    console.log(prevProps.data,this.props.data);
     if(prevProps.data !== this.props.data){
       var cachier_waits=[],
           manager_waits=[],
@@ -595,6 +599,11 @@ class ScenePicture extends Component {
       return <h4>Билетов нет</h4>
     }
   }
+  stream(){
+    var canvas = document.getElementById('videoCanvas');
+    var client = new WebSocket( 'ws://127.0.0.1:5000/');
+    var player = new jsmpeg(client, {canvas:canvas});
+  }
   render(){
     const timeConvert = (minute)=>{
       var num = minute;
@@ -786,6 +795,7 @@ class ScenePicture extends Component {
                 false
             }
           </TabPane>
+
       </TabContent>
     )
   }

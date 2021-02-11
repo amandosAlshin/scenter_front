@@ -26,7 +26,8 @@ class Monitoring extends Component {
     this.changeFilial = this.changeFilial.bind(this);
     this.changeBranch = this.changeBranch.bind(this);
     this.toggle = this.toggle.bind(this);
-    this.windowsList = this.windowsList.bind(this)
+    this.windowsList = this.windowsList.bind(this);
+    this.cameraListEvent = this.cameraListEvent.bind(this);
   }
   componentWillMount(){
     if(this.props.branches){
@@ -40,6 +41,7 @@ class Monitoring extends Component {
     }
   }
   componentWillReceiveProps(props){
+
     if(props.branches && this.state.branch_list.length===0){
       var branchesFilter = statusBranch(props.branches,props.filter,props.filter_filial,props.filter_branch);
       if(branchesFilter.general_filter_filial && branchesFilter.branch_list){
@@ -146,6 +148,9 @@ class Monitoring extends Component {
   componentWillUnmount(){
     clearInterval(this.intervalId);
   }
+  cameraListEvent(){
+    this.props.cameraList(4992005);
+  }
   render() {
     return (
       <div className="animated fadeIn">
@@ -229,8 +234,9 @@ class Monitoring extends Component {
                     Обслуживающие
                   </NavLink>
                 </NavItem>
+
               </Nav>
-              <ScenePicture activeTab={this.state.activeTab} data={
+              <ScenePicture cameraSucces={this.props.camera_list_success} activeTab={this.state.activeTab} data={
                   this.windowsList(
                     this.props.waits_ticket,
                     this.props.serv_ticket,

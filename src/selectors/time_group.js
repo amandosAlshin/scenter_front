@@ -67,6 +67,18 @@ export const timeGroup = createSelector(
 
       var arr = [];
       for(var s=0; s<=result.length-1; s++){
+        let waitover=0,preservover=0,ratingover = 0;
+        _.map(result[s].tickets,function(p){
+          if(p.waitover === "true"){
+            waitover++;
+          }
+          if(p.PreServOver === "true"){
+            preservover++;
+          }
+          if(p.ratingover <=2){
+            ratingover++;
+          }
+        });
         var hour = result[s].time_event.slice(0,result[s].time_event.length-2);
         var minute = result[s].time_event.slice(result[s].time_event.length-2,result[s].time_event.length);
         var employee = groupBy(result[s].tickets, 'operator', 'operator', 'tickets');
@@ -74,6 +86,11 @@ export const timeGroup = createSelector(
             "time_event": result[s].time_event,
             "count": result[s].tickets.length,
             "tickets": result[s].tickets,
+            "waitover": waitover,
+            "preservover": preservover,
+            "ratingover": ratingover,
+            "problemticket": waitover+preservover+ratingover,
+            "kpi": Math.round(100-(((waitover+preservover+ratingover)*100)/result[s].tickets.length)),
             "time": hour+":"+minute,
             'employee_count': employee.length,
             "Среднее время обслуживания": Math.round(_.sumBy(result[s].tickets, 'inservice')/result[s].tickets.length * 100)/100,

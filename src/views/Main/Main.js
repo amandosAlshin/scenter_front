@@ -210,6 +210,7 @@ class Main extends Component {
                               padding="auto"
                               height={500}
                               forceFit
+
                               animate={false}
                               onLegendItemClick={(e)=>{this.props.history.push('/detail/queue-child/0/waitover/'+e.data.value)}}
                             >
@@ -241,7 +242,8 @@ class Main extends Component {
                             <Geom
                               type="intervalStack"
                               position="count"
-                              color="w_name"
+                              colorField="w_name"
+                              color={["w_name",['#d62728', '#90191a', '#e45b5c', '#af1e1f', '#f5090b', '#ce0002','#f5090b', '#ce0002', '#e4e4e4']]}
                               tooltip={[
                                 "w_name*count",
                                 (w_name, count) => {

@@ -10,6 +10,11 @@ import {UseraddCont} from './containers/Useradd';
 import {UsersCont} from './containers/Users';
 import {UserCont} from './containers/User';
 
+import {CameraaddCont} from './containers/Cameraadd';
+import {CamersCont} from './containers/Camers';
+
+import {CameraCont} from './containers/Camera';
+
 import {BranchDetailCont,BranchChildCont,BranchDetailChildTableCont} from './containers/Detail/BranchDetail';
 import {QueueDetailChildTableCont,QueueDetailCont,QueueChildCont} from './containers/Detail/QueueDetail';
 import {StateDetailCont} from './containers/Detail/StateDetail';
@@ -28,6 +33,10 @@ const routes = [
   { path: '/user/user-list/:id', name: 'Пользователь', component: UserCont },
   { path: '/user/user-add', name: 'Добавить пользователя', component: UseraddCont },
 
+  { path: '/camera/camera-list', exact: true,  name: 'Камеры', component: CamersCont },
+  { path: '/camera/camera-add', name: 'Добавить камеру', component: CameraaddCont },
+  { path: '/camera/camera-watch/:id', name: 'Камера', component: CameraCont },
+
   { path: '/detail/branch/:type/:data/',exact: true, name: 'Билеты по филиалам', component: BranchDetailCont },
   { path: '/detail/branch-child/:filial/:type/:data', name: 'Билеты по услугам', component: BranchChildCont },
   { path: '/detail/branch-table-child/:filial/:type/:data', name: 'Билеты по услугам', component: BranchDetailChildTableCont },
@@ -36,6 +45,7 @@ const routes = [
   { path: '/detail/queue-parent/:branch/:type/:data', name: 'Билеты по услугам', component: QueueDetailCont },
   { path: '/detail/queue-child/:branch/:type/:data', name: 'Билеты по услугам', component: QueueChildCont },
   { path: '/detail/state/:type/:data', name: 'Общие показатели по электронной очереди', component: StateDetailCont },
+
 
   { path: '/nomad/server-list',exact: true,   name: 'Серверы Nomad', component: ServersCont },
 ];

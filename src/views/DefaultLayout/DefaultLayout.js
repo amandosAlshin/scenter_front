@@ -55,7 +55,7 @@ class DefaultLayout extends Component {
        if(event){
          let assessment = JSON.parse(event.data);
          if(assessment.type === "noconnect"){
-           notification("Отделение: "+assessment.name+" ip: "+assessment.ip+"   ", "Не доступен отделение");
+           notification("Отделение: "+assessment.name+" ip: "+assessment.ip+"   ", "Не доступен сервер");
          }else if (assessment.type === "inservice") {
            notification("Номер билета: "+assessment.ticketno+" Оператор: "+assessment.operator+" Услуга: "+assessment.servicename+"   Окно: "+assessment.windownum+" Отделение: "+assessment.branchName+" ", "Долгое обслуживание");
          }else if (assessment.type === "waiting") {
@@ -76,7 +76,7 @@ class DefaultLayout extends Component {
      const now = Date.now();
      const body = value;
      const tag = now;
-     const icon = "../../assets/img/brand/logo.png";
+     const icon = "../../assets/img/brand/logo.jpg";
      const options = {
        tag: tag,
        body: body,

@@ -46,3 +46,8 @@ export const WindowStatesAction = (data,update=false)=>{
       });
   }
 }
+
+
+
+// WEBPACK FOOTER //
+// ./src/actions/window_state.js

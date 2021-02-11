@@ -56,17 +56,23 @@ class Peakclock extends Component {
                      <Axis name="time"/>
                      <Axis name="value" />
                      <Tooltip
-                       itemTpl="<li>Количество билетов: {value} <br /> Количество операторов: {employee_count}</li>"
+                       itemTpl="<li>Количество билетов: {value} <br /> Количество операторов: {employee_count}<br />Долгое ожидание: {waitover} <br />Долгое обслуживание: {preservover} <br />Плохие оценки: {ratingover} <br /> KPI: {kpi}%</li>"
                        crosshairs={{
                          type: "y"
                        }}
                      />
                      <Legend onClick={this.clickTime}/>
-                     <Geom type="line" position="time*count*employee_count" size={2}
-                       tooltip={['count*employee_count', (count, employee_count) => {
+                     <Geom type="line" position="time*count*employee_count*kpi*waitover*preservover*ratingover" size={2}
+                       tooltip={['count*employee_count*kpi*waitover*preservover*ratingover', (count, employee_count,kpi,waitover,preservover,ratingover) => {
+                         // console.log("t "+tickets);
                           return {
                             employee_count: employee_count,
-                            value: count
+                            value: count,
+                            kpi: kpi,
+                            waitover: waitover,
+                            preservover: preservover,
+                            ratingover: ratingover,
+
                           };
                         }]}
                      />
@@ -93,7 +99,6 @@ class Peakclock extends Component {
               <CardBody>
                 <div className="chart-wrapper">
                   <Chart height={400} data={this.chartDataQuantity(this.props.time_group)} scale={cols} forceFit>
-
                      <Axis name="time" />
                      <Axis
                        name="clock"
